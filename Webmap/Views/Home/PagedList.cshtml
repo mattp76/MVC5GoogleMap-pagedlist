@@ -1,0 +1,27 @@
+﻿@using PagedList;
+@using PagedList.Mvc
+@using Webmap.Models
+
+@model PagedList.IPagedList<MapModel>
+
+
+<h2>List of Products</h2>
+
+<ul>
+    @foreach (var m in Model)
+    {
+        <li>@m.name</li>
+    }
+</ul>
+
+
+<!-- output a paging control that lets the user navigation to the previous page, next page, etc -->
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+
+
+
+
+
+
+

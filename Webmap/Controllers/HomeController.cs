@@ -11,7 +11,7 @@ namespace Webmap.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index(int? page)
+        public ActionResult Index(int page = 1)
         {
 
             var obj = new MapModel() {
@@ -100,15 +100,12 @@ namespace Webmap.Controllers
             objList.Add(obj7);
 
             var str = getMapJson(obj);
+           
+            bool isAjax = Request.IsAjaxRequest();
 
-            //var strFromList = getMapJson(objList);
-            var strFromList = objList;
-
-            var pagenumber = page ?? 1;
-            var onePageOfList = strFromList.ToPagedList(pagenumber, 2);
-
-            ViewBag.OnePageOfList = onePageOfList;
-
+            return isAjax
+                ? (ActionResult)PartialView("PagedList", objList.ToPagedList(page, 2))
+                : View(objList.ToPagedList(page, 2));
 
             return View();
         }

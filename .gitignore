@@ -1,0 +1,8 @@
+App_Readme
+VolkswagenHelper
+packages
+obj
+Data/CITemplate/*.html
+Data/Snapshot/*.json
+*.Publish.xml
+bin

@@ -1,4 +1,9 @@
 ﻿@using Webmap.Models
+
+@using PagedList.Mvc; //import this so we get our HTML Helper
+@using PagedList; //import this so we can cast our list to IPagedList (only necessary because ViewBag is dynamic)
+
+
 @model List<MapModel>
 
 
@@ -22,17 +27,19 @@
 </style>
 <br />
 
-@{ 
-    foreach(var m in Model)
+<h2>List of Products</h2>
+<ul>
+    @foreach (var m in ViewBag.OnePageOfList)
     {
-
-        <p>@m.id</p>
-        <p>@m.lat</p>
-        <p>@m.lng</p>
-
+        <li>@m.name</li>
     }
+</ul>
 
-}
+
+<!-- output a paging control that lets the user navigation to the previous page, next page, etc -->
+@Html.PagedListPager((IPagedList)ViewBag.OnePageOfList, page => Url.Action("Index", new { page }))
+
+
 
 
 <!-- This is the div that will contain the Google Map -->

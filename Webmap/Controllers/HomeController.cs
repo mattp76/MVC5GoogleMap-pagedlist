@@ -5,12 +5,13 @@ using System.Web;
 using System.Web.Mvc;
 using Webmap.Models;
 using Newtonsoft.Json;
+using PagedList;
 
 namespace Webmap.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
 
             var obj = new MapModel() {
@@ -23,7 +24,7 @@ namespace Webmap.Controllers
             var obj1 = new MapModel()
             {
                 id = 1,
-                name = "matty",
+                name = "tester",
                 lat = "10.16596",
                 lng = "36.401081"
             };
@@ -32,7 +33,7 @@ namespace Webmap.Controllers
             var obj2 = new MapModel()
             {
                 id = 1,
-                name = "matty",
+                name = "hello",
                 lat = "10.16596",
                 lng = "36.401081"
             };
@@ -100,11 +101,16 @@ namespace Webmap.Controllers
 
             var str = getMapJson(obj);
 
-            var strFromList = getMapJson(objList);
+            //var strFromList = getMapJson(objList);
+            var strFromList = objList;
+
+            var pagenumber = page ?? 1;
+            var onePageOfList = strFromList.ToPagedList(pagenumber, 2);
+
+            ViewBag.OnePageOfList = onePageOfList;
 
 
-
-            return View(objList);
+            return View();
         }
 
         public ActionResult About()
